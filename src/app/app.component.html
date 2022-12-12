@@ -1,0 +1,136 @@
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
+<!-- * * * * * * * to get started with your project! * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+<!-- Toolbar -->
+
+<style>
+  .mt-100 {
+    margin-top: 100px;
+  }
+</style>
+
+<!-- <div class="content bg-warning"></div> -->
+
+<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+  <main role="main" class="container d-flex a-center">
+    <h1 class="navbar-brand">angushit.</h1>
+
+    <ul class="navbar-nav">
+      <li class="nav-item text-light active">Посты</li>
+      <li class="nav-item text-light">Авторизация</li>
+      <li class="nav-item text-light">Регистрация</li>
+      <li class="nav-item text-light">Пользователи</li>
+    </ul>
+  </main>
+</nav>
+
+<!-- MODAL WINDOW TO SHOW CURRENT NEWS  -->
+<div
+  *ngIf="
+    activeWindow && selectedNew && selectedNew.data && selectedNew.data._id
+  "
+  class="modal-evyz-window"
+  (click)="setSelectedNew(null)"
+>
+  <div class="modal-evyz-window-content" (click)="onEvent($event)">
+    <main role="main" class="container">
+      <h2 *ngIf="selectedNew">{{ selectedNew.data.title }}</h2>
+      <span>Количество лайков: {{ selectedNew.data.likes.length }}</span>
+
+      <div *ngIf="selectedNew.data.likes.length">
+        <!-- <img  /> -->
+      </div>
+    </main>
+  </div>
+</div>
+<!-- MODAL WINDOW TO SHOW CURRENT NEWS  -->
+
+<!-- MODAL WINDOW TO SHOW CREATE NEWS  -->
+<div
+  *ngIf="activeWindow && !selectedNew.data"
+  class="modal-evyz-window"
+  (click)="setActiveWindow(false)"
+>
+  <div class="modal-evyz-window-content" (click)="onEvent($event)">
+    <main role="main" class="container">
+      <h1>Создать новость</h1>
+
+      <div class="form-group">
+        <label for="exampleInputEmail1">Название новости</label>
+        <input
+          (keyup)="changeState('title', $event)"
+          class="form-control mt-2"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          placeholder="Введите название новости"
+        />
+        <small id="emailHelp" class="form-text text-muted"
+          >Именно эта херь будет видна всем в интернете</small
+        >
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Автор сего творения</label>
+        <input
+          (keyup)="changeState('author', $event)"
+          class="form-control mt-2"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          placeholder="Введите имя засранца"
+        />
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Фотка</label>
+        <input
+          (keyup)="changeState('image', $event)"
+          class="form-control mt-2"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          placeholder="Введите имя засранца"
+        />
+      </div>
+
+      <button class="btn btn-success m-3" (click)="createNews()">
+        Опубликовать
+      </button>
+    </main>
+  </div>
+</div>
+
+<!-- MODAL WINDOW TO SHOW CREATE NEWS  -->
+
+<main role="main" class="container mt-100">
+  <button class="btn btn-success" (click)="setActiveWindow(true)">
+    Создать новый пост
+  </button>
+</main>
+
+<main role="main" class="container mt-100">
+  <div
+    class="my-3 bg-white rounded box-shadow"
+    *ngFor="let item of news.data; index as i; first as isFirst"
+  >
+    <div class="row mb-4 border-bottom pb-2" (click)="setSelectedNew(item)">
+      <img
+        class="col-3 img-fluid shadow-1-strong rounded"
+        width="32"
+        height="32"
+        src="{{ item.image }}"
+      />
+      <p class="col-9 mb-2">
+        <strong class="d-block text-gray-dark">{{ item.author }}</strong>
+        {{ item.title }}
+      </p>
+    </div>
+  </div>
+</main>
+
+<!-- 
+<div class="content bg-dark" role="main">
+  <button class="btn btn-success">Click</button>
+</div> -->
